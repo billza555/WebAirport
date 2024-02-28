@@ -1,4 +1,5 @@
 from typing import Union, Optional
+from datetime import datetime
 
 from fastapi import FastAPI
 
@@ -31,12 +32,9 @@ class AirportSystem:
     def check_flight(froml, to, date):
         a = []
         for i in AirportSystem.__flight_instance_list:
-            if i.froml.upper() == froml.upper() and i.to.upper() == to.upper() and i.date == date:
+            if i.froml.upper() == froml.upper() and i.to.upper() == to.upper() :
                 a.append(i)
         return a
-    
-    def choose_seat(passenger, seat):
-        passenger.seat = seat
 
 class Reservation:
     def __init__(self, flight_instances, passengers, booking_reference):
@@ -156,7 +154,7 @@ class FlightInstance(Flight):
     
     @property
     def boarding_time(self):
-        return self.__time_departure + " - " +self.__time_arrival
+        return self.__time_arrival + " " + self.__time_departure
     
     @property
     def aircraft(self):
@@ -209,10 +207,12 @@ class MoreBaggage(Service):
         self.__weight = weight
 
 n = User()
-AirportSystem.create_flight(FlightInstance("Thai", "Indo", "ABC", ["A1", "A2"], "8.00", "10.00", Aircraft(["A1, A2"], "ABC"), "22-2-2020"))
-n.passenger = Passenger("Mr","Rachchanon", "","Klaisuban", "3-5-2005","0621419954","nphisu@gmail.com")
-AirportSystem.create_reservation(Reservation(AirportSystem.check_flight("Thai", "Indo", "22-2-2020"), [n.passenger], 0))
-AirportSystem.choose_seat(n.passenger, "A1")
+n.passenger = Passenger("Mr","Rachchanon", "","Klaisuban", datetime(2005, 5, 3),"0621419954","nphisu@gmail.com")
+AirportSystem.create_flight(FlightInstance("Thai", "Indo", "ABC", ["A1", "A2"], "8.00", "10.00", Aircraft(["A1, A2"], "ABC"), datetime(2020, 2, 22)))
+AirportSystem.create_flight(FlightInstance("Thai", "Indo", "ABC", ["A1", "A2"], "12.00", "14.00", Aircraft(["A1, A2"], "ABC"), datetime(2020, 2, 22)))
+AirportSystem.create_flight(FlightInstance("Thai", "Indo", "ABC", ["A1", "A2"], "16.00", "18.00", Aircraft(["A1, A2"], "ABC"), datetime(2020, 2, 22)))
+AirportSystem.create_flight(FlightInstance("Thai", "Indo", "ABC", ["A1", "A2"], "20.00", "22.00", Aircraft(["A1, A2"], "ABC"), datetime(2020, 2, 22)))
+AirportSystem.create_reservation(Reservation(AirportSystem.check_flight("Thai", "Indo", datetime(2020, 2, 22)), [n.passenger], 0))
 print(AirportSystem.check_in(0,"Klaisuban"))
 
 app = FastAPI()
@@ -220,3 +220,13 @@ app = FastAPI()
 @app.get("/boarding_pass")
 def board_pass(booking_reference : int, lastname : str):
     return AirportSystem.check_in(booking_reference, lastname)
+
+@app.get("/book_flight")
+def test(froml : str, to : str, amount_passenger : int, depart : str, returnl : Optional[datetime] = None):
+    a = []
+    for i in range(amount_passenger):
+        if i == 0:
+            a.append(AirportSystem.check_flight(froml, to, datetime(2022, 2, 22)))
+        if i == 1:
+            a.append(AirportSystem.check_flight(froml, to, datetime(2022, 2, 22)))
+    return a

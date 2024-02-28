@@ -65,7 +65,6 @@ class AirportSystem:
             if i == seat:
                 passenger.seat = seat
         return passenger
-
 class Reservation:
     def __init__(self, booking_reference):
         self.__flight_instances = []
@@ -262,14 +261,14 @@ class MoreBaggage(Service):
 
 n = User()
 n.passenger = Passenger("Mr","Rachchanon", "","Klaisuban", "3-5-2005","0621419954","nphisu@gmail.com")
-AirportSystem.create_flight(FlightInstance("Thai", "Indo",  "8.00", "10.00", Aircraft([Seats("A1", "N"), Seats("A2", "N")], "ABC"), "22-2-2020"))
-AirportSystem.create_flight(FlightInstance("Thai", "Indo", "12.00", "14.00", Aircraft([Seats("A1", "N"), Seats("A2", "N")], "ABC"), "22-2-2020"))
-AirportSystem.create_flight(FlightInstance("Thai", "Indo", "16.00", "18.00", Aircraft([Seats("A1", "N"), Seats("A2", "N")], "ABC"), "22-2-2020"))
-AirportSystem.create_flight(FlightInstance("Indo", "Indo", "20.00", "22.00", Aircraft([Seats("A1", "N"), Seats("A2", "N")], "ABC"), "22-2-2020"))
-AirportSystem.create_flight(FlightInstance("Indo", "Thai", "8.00", "10.00", Aircraft([Seats("A1", "N"), Seats("A2", "N")], "ABC"), "22-2-2020"))
-AirportSystem.create_flight(FlightInstance("Indo", "Thai", "12.00", "14.00", Aircraft([Seats("A1", "N"), Seats("A2", "N")], "ABC"), "22-2-2020"))
-AirportSystem.create_flight(FlightInstance("Indo", "Thai", "16.00", "18.00", Aircraft([Seats("A1", "N"), Seats("A2", "N")], "ABC"), "22-2-2020"))
-AirportSystem.create_flight(FlightInstance("Indo", "Thai", "20.00", "22.00", Aircraft([Seats("A1", "N"), Seats("A2", "N")], "ABC"), "22-2-2020"))
+AirportSystem.create_flight(FlightInstance("Thai", "Indo",  "8.00", "10.00", Aircraft([Seats("A1", Category(100)), Seats("A2", Category(120))], "ABC"), "22-2-2020"))
+AirportSystem.create_flight(FlightInstance("Thai", "Indo", "12.00", "14.00", Aircraft([Seats("A1", Category(100)), Seats("A2", Category(120))], "ABC"), "22-2-2020"))
+AirportSystem.create_flight(FlightInstance("Thai", "Indo", "16.00", "18.00", Aircraft([Seats("A1", Category(100)), Seats("A2", Category(120))], "ABC"), "22-2-2020"))
+AirportSystem.create_flight(FlightInstance("Indo", "Indo", "20.00", "22.00", Aircraft([Seats("A1", Category(100)), Seats("A2", Category(120))], "ABC"), "22-2-2020"))
+AirportSystem.create_flight(FlightInstance("Indo", "Thai", "8.00", "10.00", Aircraft([Seats("A1", Category(100)), Seats("A2", Category(120))], "ABC"), "22-2-2020"))
+AirportSystem.create_flight(FlightInstance("Indo", "Thai", "12.00", "14.00", Aircraft([Seats("A1", Category(100)), Seats("A2", Category(120))], "ABC"), "22-2-2020"))
+AirportSystem.create_flight(FlightInstance("Indo", "Thai", "16.00", "18.00", Aircraft([Seats("A1", Category(100)), Seats("A2", Category(120))], "ABC"), "22-2-2020"))
+AirportSystem.create_flight(FlightInstance("Indo", "Thai", "20.00", "22.00", Aircraft([Seats("A1", Category(100)), Seats("A2", Category(120))], "ABC"), "22-2-2020"))
 AirportSystem.create_reservation(Reservation(0))
 AirportSystem.check_reservation(0).flight_instances = AirportSystem.choose_flight(AirportSystem.check_flight("Thai", "Indo", "22-2-2020"), "8.00", "10.00")
 AirportSystem.check_reservation(0).passengers = n.passenger
